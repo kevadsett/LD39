@@ -12,10 +12,16 @@ public class ActivateOnLit : MonoBehaviour {
 	private float _clockwiseBoundary;
 
 	public bool _isInView;
+	public bool _blockedByObstacle;
+
+	private EyeLookAtPlayer eyeLookAtPlayer;
+
+	private Ray _ray;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+		eyeLookAtPlayer = GetComponent<EyeLookAtPlayer>();
 	}
 
 	// Update is called once per frame
@@ -35,17 +41,32 @@ public class ActivateOnLit : MonoBehaviour {
 		_isInView = Vector3.Dot (coneEdgeVector, playerForward) < Vector3.Dot (deltaPos.normalized, playerForward);
 
 		_isInView &= deltaPos.magnitude < Radius;
+
+		_ray = new Ray (transform.position, -deltaPos.normalized);
+
+		_blockedByObstacle = Physics.Raycast (_ray, Radius, 1 << LayerMask.NameToLayer("Wall"));
+
+		if (_isInView && !_blockedByObstacle)
+		{
+			eyeLookAtPlayer.Activate ();
+		}
+		else
+		{
+			eyeLookAtPlayer.Deactivate ();
+		}
 	}
 
 	void OnDrawGizmos()
 	{
+		Vector3 deltaPos = new Vector3 (transform.position.x - Player.position.x, 0, transform.position.z - Player.position.z);
+
 		if (_isInView)
 		{
 			Gizmos.color = Color.green;
 		}
 		else
 		{
-			Gizmos.color = Color.yellow;
+			Gizmos.color = Color.red;
 		}
 
 		Vector3 ArcEndPoint1 = (Radius * new Vector3 (Mathf.Cos (_antiClockwiseBoundary), 0, Mathf.Sin (_antiClockwiseBoundary)));
@@ -53,5 +74,15 @@ public class ActivateOnLit : MonoBehaviour {
 
 		Vector3 ArcEndPoint2 = (Radius * new Vector3 (Mathf.Cos (_clockwiseBoundary), 0, Mathf.Sin (_clockwiseBoundary)));
 		Gizmos.DrawLine(Player.position, Player.position + ArcEndPoint2);
+
+		if (_blockedByObstacle)
+		{
+			Gizmos.color = Color.red;
+		}
+		else
+		{
+			Gizmos.color = Color.green;
+		}
+		Gizmos.DrawRay (transform.position, -deltaPos.normalized * Radius);
 	}
 }
