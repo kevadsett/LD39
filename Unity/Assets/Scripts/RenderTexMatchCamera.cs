@@ -6,6 +6,8 @@ public class RenderTexMatchCamera : MonoBehaviour {
 	Camera cam;
 	RenderTexture rt;
 
+	[SerializeField] Color additiveColour;
+
 	void Awake () {
 		cam = GetComponent<Camera> ();
 	}
@@ -15,6 +17,7 @@ public class RenderTexMatchCamera : MonoBehaviour {
 			rt = new RenderTexture (Screen.width, Screen.height, 16, RenderTextureFormat.ARGB32);
 			cam.targetTexture = rt;
 			Shader.SetGlobalTexture ("_LightBuffer", rt);
+			Shader.SetGlobalColor ("_AddColor", additiveColour);
 		}
 	}
 }

@@ -3,7 +3,6 @@
 	Properties
 	{
 		_Color ("Colour", Color) = (1.0, 1.0, 1.0, 1.0)
-		_AddColor ("Additive Colour", Color) = (0.5, 0.5, 0.5, 1.0)
 	}
 	SubShader
 	{
