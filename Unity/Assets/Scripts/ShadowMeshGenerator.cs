@@ -56,29 +56,24 @@ public class ShadowMeshGenerator : MonoBehaviour
 
 		for (int i = 0, vertsPerObstacle = vertices.Count / _obstacles.Count; i < _obstacles.Count * vertsPerObstacle; i+= vertsPerObstacle)
 		{
-			triangles.Add (i);
-			triangles.Add (i + 1);
-			triangles.Add (i + 6);
-
-			triangles.Add (i + 6);
-			triangles.Add (i + 1);
-			triangles.Add (i + 7);
-
-			triangles.Add (i + 6);
-			triangles.Add (i + 7);
-			triangles.Add (i + 3);
-
-			triangles.Add (i + 6);
-			triangles.Add (i + 3);
-			triangles.Add (i + 2);
-
-			triangles.Add (i + 2);
-			triangles.Add (i + 3);
-			triangles.Add (i + 5);
-
-			triangles.Add (i + 2);
-			triangles.Add (i + 5);
-			triangles.Add (i + 4);
+			triangles.Add (i);		
+			triangles.Add (i + 1);	
+			triangles.Add (i + 6);	
+			triangles.Add (i + 6);	
+			triangles.Add (i + 1);	
+			triangles.Add (i + 7); 	
+			triangles.Add (i + 6); 	
+			triangles.Add (i + 7);	
+			triangles.Add (i + 3);	
+			triangles.Add (i + 6); 	
+			triangles.Add (i + 3);	
+			triangles.Add (i + 2); 	
+			triangles.Add (i + 2); 	
+			triangles.Add (i + 3); 	
+			triangles.Add (i + 5);	
+			triangles.Add (i + 2); 	
+			triangles.Add (i + 5); 	
+			triangles.Add (i + 4);	
 		}
 
 		mesh.vertices = vertices.ToArray();
