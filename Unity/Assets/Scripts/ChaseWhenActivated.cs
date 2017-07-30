@@ -12,15 +12,22 @@ public class ChaseWhenActivated : MonoBehaviour
 
 	public float MinimumDistance;
 
+	public float WaitTimeAfterDeath = 1f;
+
 	private bool _active;
 
 	private Vector3 _target;
 
 	private Vector3 _velocity;
 
+	private ChangeGameStateOnDeath _deathHandler;
+
+	private bool _deathHandlerCalled;
+
 	void Start ()
 	{
 		_target = transform.position;
+		_deathHandler = GameObject.Find ("DeathHandler").GetComponent<ChangeGameStateOnDeath> ();
 	}
 
 	void Update ()
@@ -28,18 +35,20 @@ public class ChaseWhenActivated : MonoBehaviour
 		if (_active)
 		{
 			_target = Player.position;
+			if ((_target - transform.position).magnitude < MinimumDistance)
+			{
+				_velocity = Vector3.zero;
+				if (!_deathHandlerCalled)
+				{
+					StartCoroutine (DoDeath ());
+				}
+				return;
+			}
 		}
+			
+		Vector3 direction = (_target - transform.position).normalized;
 
-		if ((_target - transform.position).magnitude < MinimumDistance)
-		{
-			_velocity = Vector3.zero;
-		}
-		else
-		{
-			Vector3 direction = (_target - transform.position).normalized;
-
-			_velocity += direction * Acceleration * Time.deltaTime;
-		}
+		_velocity += direction * Acceleration * Time.deltaTime;
 
 		if (_velocity.magnitude > MaxSpeed)
 		{
@@ -57,5 +66,12 @@ public class ChaseWhenActivated : MonoBehaviour
 	public void Deactivate()
 	{
 		_active = false;
+	}
+
+	private IEnumerator DoDeath ()
+	{
+		_deathHandlerCalled = true;
+		yield return new WaitForSeconds (WaitTimeAfterDeath);
+		_deathHandler.ADeathHasHappened ();
 	}
 }
