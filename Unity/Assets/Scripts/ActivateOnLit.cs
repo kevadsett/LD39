@@ -18,6 +18,7 @@ public class ActivateOnLit : MonoBehaviour {
 	public List<AudioClip> Screams;
 
 	private EyeLookAtPlayer eyeLookAtPlayer;
+	private ChaseWhenActivated _chaseWhenActivated;
 
 	private Ray _ray;
 
@@ -25,14 +26,13 @@ public class ActivateOnLit : MonoBehaviour {
 
 	private bool _playedSound;
 
-	// Use this for initialization
 	void Start ()
 	{
 		eyeLookAtPlayer = GetComponent<EyeLookAtPlayer>();
+		_chaseWhenActivated = GetComponent<ChaseWhenActivated>();
 		_audioSource = GetComponent<AudioSource>();
 	}
 
-	// Update is called once per frame
 	void Update ()
 	{
 		Vector3 deltaPos = new Vector3 (transform.position.x - Player.position.x, 0, transform.position.z - Player.position.z);
@@ -57,6 +57,7 @@ public class ActivateOnLit : MonoBehaviour {
 		if (_isInView && !_blockedByObstacle)
 		{
 			eyeLookAtPlayer.Activate ();
+			_chaseWhenActivated.Activate ();
 			if (!_playedSound)
 			{
 				_playedSound = true;
@@ -68,6 +69,7 @@ public class ActivateOnLit : MonoBehaviour {
 		{
 			_playedSound = false;
 			eyeLookAtPlayer.Deactivate ();
+			_chaseWhenActivated.Deactivate ();
 		}
 	}
 
