@@ -40,7 +40,6 @@ public class TensionRiser : MonoBehaviour
 		if (minDist > MaxDist)
 		{
 			_lowPass.cutoffFrequency = LowCutoff;
-			Debug.Log (_lowPass.cutoffFrequency);
 			return;
 		}
 
@@ -51,7 +50,5 @@ public class TensionRiser : MonoBehaviour
 		float frequency = LowCutoff + (frequencyRange * position);
 
 		_lowPass.cutoffFrequency = frequency;
-
-		Debug.Log (_lowPass.cutoffFrequency);
 	}
 }

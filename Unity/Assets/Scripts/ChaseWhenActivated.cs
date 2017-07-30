@@ -26,8 +26,6 @@ public class ChaseWhenActivated : MonoBehaviour
 
 	private bool _deathHandlerCalled;
 
-	private bool _seenPlayer;
-
 	private ColActor _collision;
 
 	void Start ()
@@ -77,7 +75,7 @@ public class ChaseWhenActivated : MonoBehaviour
 
 	public void Activate()
 	{
-		_active = _seenPlayer = true;
+		_active = true;
 	}
 
 	public void Deactivate()

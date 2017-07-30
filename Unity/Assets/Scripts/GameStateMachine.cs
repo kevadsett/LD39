@@ -17,9 +17,8 @@ public class GameStateMachine : MonoBehaviour {
 	void Start ()
 	{
 		DontDestroyOnLoad (gameObject);
-		DontDestroyOnLoad (GameObject.Find("AudioListener"));
 		DontDestroyOnLoad (GameObject.Find("AmbientAudio"));
-		DontDestroyOnLoad (gameObject);
+		DontDestroyOnLoad (GameObject.Find("DataStore"));
 		_stateScenes = new Dictionary<eGameState, SceneLoader>
 		{
 			{ eGameState.Splash, new SceneLoader("Splash") },
