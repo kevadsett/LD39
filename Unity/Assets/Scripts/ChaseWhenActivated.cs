@@ -41,7 +41,7 @@ public class ChaseWhenActivated : MonoBehaviour
 		}
 	}
 
-	void Update ()
+	void FixedUpdate ()
 	{
 		float acceleration = 0f;
 
