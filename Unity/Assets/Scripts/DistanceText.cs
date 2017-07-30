@@ -19,6 +19,6 @@ public class DistanceText : MonoBehaviour
 	void Update ()
 	{
 		int distance = Mathf.RoundToInt((Exit.position - Player.position).magnitude);
-		_text.text = string.Format ("Distance to exit: {0}m", distance);
+		_text.text = string.Format ("{0}m", distance);
 	}
 }

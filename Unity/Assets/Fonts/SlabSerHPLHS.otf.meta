@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 31a826c56bc1145c6b5b9e83b21345f3
+timeCreated: 1501436983
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Slab Serif HPLHS
+  fontNames:
+  - Slab Serif HPLHS
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
