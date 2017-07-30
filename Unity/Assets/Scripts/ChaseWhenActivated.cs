@@ -28,8 +28,12 @@ public class ChaseWhenActivated : MonoBehaviour
 
 	private bool _seenPlayer;
 
+	private ColActor _collision;
+
 	void Start ()
 	{
+		_collision = GetComponent<ColActor> ();
+
 		var deathObj = GameObject.Find ("DeathHandler");
 		if (deathObj != null)
 		{
@@ -68,7 +72,7 @@ public class ChaseWhenActivated : MonoBehaviour
 			_velocity = _velocity.normalized * MaxSpeed;
 		}
 
-		transform.position += _velocity;
+		transform.position += _collision.ApplyCollisionToMoveVector (_velocity);
 	}
 
 	public void Activate()
