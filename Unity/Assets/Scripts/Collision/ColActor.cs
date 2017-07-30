@@ -29,6 +29,8 @@ public class ColActor : MonoBehaviour {
 				Vector3 conserveVec = surfaceVec.normalized * conserveAmt * cutOffVec.magnitude;
 
 				futurePoint = intersect + conserveVec;
+
+				futurePoint -= moveVec.normalized * 0.1f;
 			}
 
 			if (iterations++ > MAX_ITERATIONS) {

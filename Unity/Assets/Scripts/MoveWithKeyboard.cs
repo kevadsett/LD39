@@ -11,7 +11,7 @@ public class MoveWithKeyboard : MonoBehaviour
 		Collision = GetComponent<ColActor> ();
 	}
 
-	void Update ()
+	void FixedUpdate ()
 	{
 		Vector3 move = new Vector3(Input.GetAxis("Horizontal"), transform.position.y, Input.GetAxis("Vertical"));
 
