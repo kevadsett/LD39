@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ActivateOnLit : MonoBehaviour {
 	public float ArcAngle = Mathf.PI / 3;
@@ -14,14 +15,21 @@ public class ActivateOnLit : MonoBehaviour {
 	public bool _isInView;
 	public bool _blockedByObstacle;
 
+	public List<AudioClip> Screams;
+
 	private EyeLookAtPlayer eyeLookAtPlayer;
 
 	private Ray _ray;
+
+	private AudioSource _audioSource;
+
+	private bool _playedSound;
 
 	// Use this for initialization
 	void Start ()
 	{
 		eyeLookAtPlayer = GetComponent<EyeLookAtPlayer>();
+		_audioSource = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -49,9 +57,16 @@ public class ActivateOnLit : MonoBehaviour {
 		if (_isInView && !_blockedByObstacle)
 		{
 			eyeLookAtPlayer.Activate ();
+			if (!_playedSound)
+			{
+				_playedSound = true;
+				_audioSource.clip = Screams [Random.Range (0, Screams.Count)];
+				_audioSource.Play ();
+			}
 		}
 		else
 		{
+			_playedSound = false;
 			eyeLookAtPlayer.Deactivate ();
 		}
 	}
