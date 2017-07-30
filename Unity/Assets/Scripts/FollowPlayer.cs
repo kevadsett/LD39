@@ -27,10 +27,4 @@ public class FollowPlayer : MonoBehaviour {
 
 		transform.position = Vector3.SmoothDamp (transform.position, _targetPoint, ref _velocity, SmoothTime);
 	}
-
-	void OnDrawGizmos()
-	{
-		Gizmos.color = Color.white;
-		Gizmos.DrawSphere (_targetPoint, 1);
-	}
 }

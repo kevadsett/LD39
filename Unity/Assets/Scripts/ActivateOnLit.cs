@@ -61,8 +61,12 @@ public class ActivateOnLit : MonoBehaviour {
 			if (!_playedSound)
 			{
 				_playedSound = true;
-				_audioSource.clip = Screams [Random.Range (0, Screams.Count)];
-				_audioSource.Play ();
+				if (!_audioSource.isPlaying)
+				{
+					_audioSource.pitch = Random.Range (0.8f, 1.2f);
+					_audioSource.clip = Screams [Random.Range (0, Screams.Count)];
+					_audioSource.Play ();
+				}
 			}
 		}
 		else
