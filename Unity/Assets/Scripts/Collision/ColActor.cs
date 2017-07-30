@@ -6,7 +6,7 @@ public class ColActor : MonoBehaviour {
 
 	const int MAX_ITERATIONS = 16;
 
-	Vector3 ApplyCollisionToMoveVector (Vector3 moveVec) {
+	public Vector3 ApplyCollisionToMoveVector (Vector3 moveVec) {
 		if (ColVertices.Instance == null) {
 			return moveVec;
 		}
