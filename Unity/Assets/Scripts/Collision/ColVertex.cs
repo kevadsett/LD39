@@ -27,7 +27,6 @@ public class ColVertex : MonoBehaviour {
 		Gizmos.DrawWireSphere (transform.position, 1f);
 
 		if (next != null) {
-			Gizmos.color = Color.yellow;
 			Gizmos.DrawLine (transform.position, next.transform.position);
 		}
 	}
