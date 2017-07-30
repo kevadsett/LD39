@@ -50,9 +50,12 @@ public class ActivateOnLit : MonoBehaviour {
 
 		_isInView &= deltaPos.magnitude < Radius;
 
-		_ray = new Ray (transform.position, -deltaPos.normalized);
+		if (_isInView) {
 
-		_blockedByObstacle = Physics.Raycast (_ray, Mathf.Min(deltaPos.magnitude, Radius), 1 << LayerMask.NameToLayer("Wall"));
+			_ray = new Ray (transform.position, -deltaPos.normalized);
+
+			_blockedByObstacle = Physics.Raycast (_ray, Mathf.Min(deltaPos.magnitude, Radius), 1 << LayerMask.NameToLayer("Wall"));
+		}
 
 		if (_isInView && !_blockedByObstacle)
 		{
