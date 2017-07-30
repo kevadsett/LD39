@@ -12,6 +12,8 @@ public class ChaseWhenActivated : MonoBehaviour
 
 	public float MinimumDistance;
 
+	public float Friction = 0.9f;
+
 	public float WaitTimeAfterDeath = 1f;
 
 	private bool _active;
@@ -24,17 +26,26 @@ public class ChaseWhenActivated : MonoBehaviour
 
 	private bool _deathHandlerCalled;
 
+	private bool _seenPlayer;
+
 	void Start ()
 	{
-		_target = transform.position;
-		_deathHandler = GameObject.Find ("DeathHandler").GetComponent<ChangeGameStateOnDeath> ();
+		var deathObj = GameObject.Find ("DeathHandler");
+		if (deathObj != null)
+		{
+			_deathHandler = deathObj.GetComponent<ChangeGameStateOnDeath> ();
+		}
 	}
 
 	void Update ()
 	{
+		float acceleration = 0f;
+
 		if (_active)
 		{
 			_target = Player.position;
+			acceleration = Acceleration;
+
 			if ((_target - transform.position).magnitude < MinimumDistance)
 			{
 				_velocity = Vector3.zero;
@@ -48,7 +59,9 @@ public class ChaseWhenActivated : MonoBehaviour
 			
 		Vector3 direction = (_target - transform.position).normalized;
 
-		_velocity += direction * Acceleration * Time.deltaTime;
+		_velocity += direction * acceleration * Time.deltaTime;
+
+		_velocity *= Friction;
 
 		if (_velocity.magnitude > MaxSpeed)
 		{
@@ -60,7 +73,7 @@ public class ChaseWhenActivated : MonoBehaviour
 
 	public void Activate()
 	{
-		_active = true;
+		_active = _seenPlayer = true;
 	}
 
 	public void Deactivate()
@@ -68,10 +81,20 @@ public class ChaseWhenActivated : MonoBehaviour
 		_active = false;
 	}
 
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawSphere (_target, 0.25f);
+	}
+
 	private IEnumerator DoDeath ()
 	{
 		_deathHandlerCalled = true;
-		yield return new WaitForSeconds (WaitTimeAfterDeath);
-		_deathHandler.ADeathHasHappened ();
+		Time.timeScale = 0;
+		yield return new WaitForSecondsRealtime (WaitTimeAfterDeath);
+		if (_deathHandler != null)
+		{
+			_deathHandler.ADeathHasHappened ();
+		}
 	}
 }

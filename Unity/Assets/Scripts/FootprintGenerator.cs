@@ -12,6 +12,9 @@ public class FootprintGenerator : MonoBehaviour
 
 	public float Width;
 
+	public List<AudioClip> FootstepSounds;
+	public List<AudioClip> UnusedSounds;
+
 	private float _distanceTravelled;
 
 	private Vector3 _positionLastFrame;
@@ -20,9 +23,17 @@ public class FootprintGenerator : MonoBehaviour
 
 	private bool _isLeft;
 
+	private AudioSource _leftSource;
+	private AudioSource _rightSource;
+
 	void Start ()
 	{
-		
+		_leftSource = gameObject.AddComponent<AudioSource> ();
+		_rightSource = gameObject.AddComponent<AudioSource> ();
+
+		_leftSource.volume = _rightSource.volume = 0.05f;
+
+		ResetUnusedSounds ();
 	}
 
 	void Update ()
@@ -57,5 +68,38 @@ public class FootprintGenerator : MonoBehaviour
 		newFootprint.transform.SetParent (transform);
 
 		_footprints.Add (newFootprint);
+
+		PlayFootstep ();
+	}
+
+	private void PlayFootstep()
+	{
+		if (UnusedSounds.Count == 0)
+		{
+			ResetUnusedSounds ();
+		}
+
+		AudioClip nextSound = UnusedSounds [Random.Range (0, UnusedSounds.Count)];
+		UnusedSounds.Remove (nextSound);
+		if (_isLeft)
+		{
+			_leftSource.clip = nextSound;
+			_leftSource.pitch = Random.Range (0.9f, 1.1f);
+			_leftSource.Play ();
+		}
+		else
+		{
+			_rightSource.clip = nextSound;
+			_rightSource.pitch = Random.Range (0.9f, 1.1f);
+			_rightSource.Play ();
+		}
+	}
+
+	private void ResetUnusedSounds()
+	{
+		foreach (AudioClip sound in FootstepSounds)
+		{
+			UnusedSounds.Add (sound);
+		}
 	}
 }

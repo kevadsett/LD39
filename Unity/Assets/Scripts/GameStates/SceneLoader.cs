@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class SceneLoader
 {
@@ -13,6 +14,7 @@ public class SceneLoader
 	public void OnEnter ()
 	{
 		SceneManager.LoadScene (_sceneName);
+		Time.timeScale = 1;
 	}
 
 	public void OnExit ()
