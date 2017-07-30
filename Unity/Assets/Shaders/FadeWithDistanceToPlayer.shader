@@ -6,6 +6,7 @@
  Shader "Unlit/Transparent" {
  Properties {
      _MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
+     _TransparencyModifier ("Transparency", Float) = 1.0
  }
  
  SubShader {
@@ -36,6 +37,7 @@
  
              sampler2D _MainTex;
              float4 _MainTex_ST;
+             float _TransparencyModifier;
              
              v2f vert (appdata_t v)
              {
@@ -49,7 +51,7 @@
              fixed4 frag (v2f i) : SV_Target
              {
                  fixed4 col = tex2D(_MainTex, i.texcoord);
-                 col.a = 1 - i.texcoord.y;
+                 col.a = (1 - i.texcoord.y) * _TransparencyModifier;
                  UNITY_APPLY_FOG(i.fogCoord, col);
                  return col;
              }
