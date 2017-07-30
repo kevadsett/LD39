@@ -7,6 +7,9 @@ public class EyeLookAtPlayer : MonoBehaviour {
 	[SerializeField] float lookAtTime;
 	[SerializeField] AnimationCurve lookAtCurve;
 
+	[SerializeField] float startOffset;
+	[SerializeField] float endOffset;
+
 	float timer;
 	bool shouldLookAt;
 
@@ -24,8 +27,8 @@ public class EyeLookAtPlayer : MonoBehaviour {
 
 			Quaternion lookAt = Quaternion.LookRotation (target.position - transform.position);
 
-			Quaternion lookAway = lookAt * Quaternion.Euler (-179f, 0f, 0f);
-			Quaternion lookPretty = lookAt * Quaternion.Euler (-10f, 0f, 0f);
+			Quaternion lookAway = lookAt * Quaternion.Euler (-180f + startOffset, 0f, 0f);
+			Quaternion lookPretty = lookAt * Quaternion.Euler (-endOffset, 0f, 0f);
 
 			transform.rotation = Quaternion.SlerpUnclamped (lookAway, lookPretty, lookAtCurve.Evaluate (timer));
 

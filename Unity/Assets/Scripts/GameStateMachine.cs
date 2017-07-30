@@ -38,6 +38,9 @@ public class GameStateMachine : MonoBehaviour {
 			currentStateScene.OnExit ();
 		}
 
+		// cursor hack
+		Cursor.visible = (newState != eGameState.Main);
+
 		currentStateScene = _stateScenes [newState];
 		currentStateScene.OnEnter ();
 	}
