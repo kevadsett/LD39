@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class ActivateOnLit : MonoBehaviour {
-	public float ArcAngle = Mathf.PI / 4;
+	public float ArcAngle = Mathf.PI / 3;
 
 	public float Radius = 10f;
 
@@ -44,7 +44,7 @@ public class ActivateOnLit : MonoBehaviour {
 
 		_ray = new Ray (transform.position, -deltaPos.normalized);
 
-		_blockedByObstacle = Physics.Raycast (_ray, Radius, 1 << LayerMask.NameToLayer("Wall"));
+		_blockedByObstacle = Physics.Raycast (_ray, Mathf.Min(deltaPos.magnitude, Radius), 1 << LayerMask.NameToLayer("Wall"));
 
 		if (_isInView && !_blockedByObstacle)
 		{
