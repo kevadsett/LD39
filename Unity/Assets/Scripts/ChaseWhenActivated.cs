@@ -90,7 +90,10 @@ public class ChaseWhenActivated : MonoBehaviour
 	private IEnumerator DoDeath ()
 	{
 		_deathHandlerCalled = true;
-		Time.timeScale = 0;
+
+		Player.GetComponent<MoveWithKeyboard> ().enabled  = false;
+		ScaryDeathEye.Play ();
+
 		yield return new WaitForSecondsRealtime (WaitTimeAfterDeath);
 		if (_deathHandler != null)
 		{
