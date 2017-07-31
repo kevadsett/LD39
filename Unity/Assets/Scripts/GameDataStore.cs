@@ -24,6 +24,9 @@ public class GameDataStore : MonoBehaviour
 					"Daylight is not for the likes of you.",
 					"Damned...damned for eternity"
 				}
+			},
+			{
+				"AbsoluteControls", true
 			}
 		};
 	}
