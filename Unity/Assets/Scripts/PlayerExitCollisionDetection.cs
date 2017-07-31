@@ -15,8 +15,6 @@ public class PlayerExitCollisionDetection : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		Debug.Log(collision);
-
 		if (LayerMask.LayerToName (collision.collider.gameObject.layer) != "Player")
 		{
 			return;
