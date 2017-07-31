@@ -59,6 +59,8 @@ public class ActivateOnLit : MonoBehaviour {
 
 		if (_isInView && !_blockedByObstacle)
 		{
+			MagicCamera.TellEnemyIsVisible ();
+
 			eyeLookAtPlayer.Activate ();
 			_chaseWhenActivated.Activate ();
 			if (!_playedSound)
