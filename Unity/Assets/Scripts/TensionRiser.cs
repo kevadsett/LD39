@@ -8,19 +8,27 @@ public class TensionRiser : MonoBehaviour
 
 	public float MaxDist = 10f;
 
+	public AnimationCurve Curve;
+
+#if UNITY_WEBGL
+	private AudioSource _source;
+#else
 	public float HighCutoff = 2000f;
 
 	public float LowCutoff = 20f;
 
-	public AnimationCurve Curve;
-
 	private AudioLowPassFilter _lowPass;
+#endif
 
 	private List<Transform> _enemies = new List<Transform>();
 
 	void Start ()
 	{
+#if UNITY_WEBGL
+		_source = GetComponent<AudioSource>();
+#else
 		_lowPass = GetComponent<AudioLowPassFilter> ();
+#endif
 		Transform enemies = GameObject.Find ("Enemies").transform;
 		foreach (Transform enemy in enemies)
 		{
@@ -39,16 +47,24 @@ public class TensionRiser : MonoBehaviour
 
 		if (minDist > MaxDist)
 		{
+#if UNITY_WEBGL
+			_source.volume = 0;
+#else
 			_lowPass.cutoffFrequency = LowCutoff;
+#endif
 			return;
 		}
 
 		float position = Curve.Evaluate(1 - (minDist / MaxDist));
 
+#if UNITY_WEBGL
+		_source.volume = position * 0.2f;
+#else
 		float frequencyRange = HighCutoff - LowCutoff;
 
 		float frequency = LowCutoff + (frequencyRange * position);
 
 		_lowPass.cutoffFrequency = frequency;
+#endif
 	}
 }
