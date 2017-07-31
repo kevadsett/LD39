@@ -12,7 +12,7 @@ public class StartMainOnAnyKey : MonoBehaviour {
 
 	void Update ()
 	{
-		if (Input.anyKeyDown)
+		if (Input.GetMouseButtonDown(0))
 		{
 			_gameStateMachine.ChangeState (GameStateMachine.eGameState.Main);
 		}
