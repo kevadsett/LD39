@@ -32,12 +32,12 @@ public class AmbientCalls : MonoBehaviour {
 		}
 	}
 
-	private void PlaySound()
+	public void PlaySound(float volume = -1f)
 	{
 		_audioSource.clip = Sounds [Random.Range (0, Sounds.Count)];
 		_audioSource.Play ();
 		_audioSource.panStereo = Random.Range (-1f, 1f);
-		_audioSource.volume = Random.Range (0.2f, 0.4f);
+		_audioSource.volume = volume == -1f ? Random.Range (0.2f, 0.4f) : volume;
 		_audioSource.pitch = Random.Range (0.9f, 1.1f);
 		_lastPlayTime = Time.time;
 	}
